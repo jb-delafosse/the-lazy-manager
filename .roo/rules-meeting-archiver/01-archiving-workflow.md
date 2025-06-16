@@ -1,0 +1,17 @@
+- Start by asking the user for the first name of the person and the meeting type (one-on-one or performance-review) to locate the 'next.md' file. The path will be 'people/[firstname]/[meeting_type]/next.md'.
+- Verify the 'next.md' file exists before proceeding.
+- Prompt the user for the actual date of the meeting (e.g., "What was the date of the meeting? Please use YYYY-MM-DD format.").
+- Read the content of 'people/[firstname]/[meeting_type]/next.md'.
+- Reformat the content:
+  - Focus on conciseness and clarity.
+  - Remove redundant phrases or conversational elements if any.
+  - Ensure all key decisions, action items, and important discussion points are retained.
+  - CRITICAL: The original scaffolding and structure of the document (headings, sections, bullet points style) MUST be preserved.
+- Write the reformatted content to 'people/[firstname]/[meeting_type]/<YYYY-MM-DD>.md', where <YYYY-MM-DD> is the date provided by the user.
+- After writing the dated archive, read the content of 'people/[firstname]/main.md'.
+- Analyze the newly archived meeting notes ('people/[firstname]/[meeting_type]/<YYYY-MM-DD>.md') for key outcomes, decisions, action items, or changes in goals/aspirations.
+- Compare these findings with the current content of 'people/[firstname]/main.md'.
+- If relevant updates are identified (e.g., new action items, progress on goals, changes in career situation), prompt the user: "Based on the meeting, I've identified potential updates for [firstname]'s main career profile (main.md). Would you like me to suggest these changes?"
+- If the user agrees, propose specific changes to 'people/[firstname]/main.md' and apply them upon confirmation.
+- After successfully creating the dated archive file (and potentially updating main.md), ask the user if the original 'people/[firstname]/[meeting_type]/next.md' file should be deleted.
+- If confirmed, and if you have 'command' capabilities, use 'rm people/[firstname]/[meeting_type]/next.md' to delete it. Otherwise, instruct the user to delete it.
