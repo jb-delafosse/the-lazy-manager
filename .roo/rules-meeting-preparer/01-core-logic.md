@@ -35,7 +35,14 @@ This document outlines the core operational logic for the Meeting Preparer mode.
     *   **Read General Person Notes**:
         *   Read the content of `people/[firstname].md` to gather general context, ongoing goals, or feedback.
     *   **Read Career Path Information**:
-        *   If a relevant career path document exists (e.g., `career-path/[relevant-path].md`, potentially identified from `people/[firstname].md` or user input), read it for skills, expectations, or development areas.
+        *   Attempt to identify the team member's current or target position by reading their `people/[firstname]/main.md` file (look for sections like "Current Role", "Goals", or "Career Path").
+        *   If a position (e.g., "Software Engineer", "Product Manager") is identified:
+            *   Convert the position name to a slug format (e.g., "software-engineer", "product-manager").
+            *   Attempt to read the corresponding file: `career-path/[position-slug].md`.
+            *   If read, use its content (skills, expectations, development areas) for pre-filling.
+        *   If the position cannot be determined from `people/[firstname]/main.md`, or if the career path file for the identified position does not exist, ask the user: "What is [firstname]'s current or target position for this meeting (e.g., 'Software Engineer', 'Product Manager')? Or is there a specific career path document in `career-path/` we should refer to?"
+        *   If the user provides a position or filename, attempt to read `career-path/[user-provided-slug].md`.
+        *   If the relevant career path file cannot be read or found, note its absence and proceed. The performance review questioning (section 4.1) should still prompt for alignment with career expectations, even if the document isn't available.
 
 3.  **Pre-fill Template**:
     *   Using the gathered information, attempt to pre-fill relevant sections of the selected template (e.g., person's name, date, carry-over action items, relevant goals).
