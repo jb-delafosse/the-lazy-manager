@@ -14,6 +14,9 @@ The primary location for all career discussion notes is within the project root,
             *   Current situation related to their career path.
             *   Do's and don'ts for managing or collaborating with this specific person.
         *   Other subdirectories (like `one-on-one/`, `performance-review/` as used by modes like Meeting Preparer and Meeting Archiver) will also reside within `people/[firstname]/`.
+    *   `me/`: A dedicated directory for the user's own career-related documents.
+        *   `main.md`: This file within `people/me/` serves as the central document for the user's compiled information.
+        *   Other subdirectories (like `one-on-one/`, `performance-review/`) will also reside within `people/me/`.
 *   `career-path/`
     *   `[career_path_name].md` (e.g., `software-engineer.md`, `product-manager.md`): For notes, skills, expectations, and resources related to specific career trajectories within the team or company.
 
@@ -26,14 +29,21 @@ Upon the first interaction with any mode in this project:
     *   If they do not exist, the mode **MUST** attempt to create them.
         *   If the mode possesses `command` execution capabilities, it should use commands like `mkdir -p people career-path` to create them.
         *   If the mode lacks `command` capabilities, it **MUST** instruct the user clearly and immediately: "To begin, we need to set up the discussion structure. Please create two directories in your project root: `people` and `career-path`. Let me know once this is done." The mode should not proceed further until the user confirms creation.
-*   **Prompt for Team Member Names and Create Person Files**:
-    *   Once the `people/` directory is confirmed to exist, the mode **MUST** ask the user: "To personalize our discussions, could you please provide the first names of your team members? Please list them separated by commas (e.g., Alex, Sarah, Jordan)."
-    *   For each first name provided by the user, the mode (if it has `edit` capabilities for `people/[firstname]/main.md`) **MUST** attempt to:
-        1.  Create the directory `people/[firstname]/` if it doesn't already exist (e.g., `people/alex/`). If using `command` tools, `mkdir -p people/[firstname]` is suitable.
-        2.  Create an empty file `people/[firstname]/main.md` (e.g., `people/alex/main.md`).
-        *   Example content for a new `people/[firstname]/main.md` file:
-            ```markdown
-            # Career Profile: [firstname]
+*   **Prompt for Team Member Names and Create Person Files / Personal Files**:
+    *   Once the `people/` directory is confirmed to exist:
+        *   **For Team Members**: The mode **MUST** ask the user: "To personalize our discussions, could you please provide the first names of your team members? Please list them separated by commas (e.g., Alex, Sarah, Jordan). If you are preparing for yourself, you can type 'me'."
+        *   If the user provides first names: For each first name, the mode (if it has `edit` capabilities for `people/[firstname]/main.md`) **MUST** attempt to:
+            1.  Create the directory `people/[firstname]/` if it doesn't already exist (e.g., `people/alex/`). If using `command` tools, `mkdir -p people/[firstname]` is suitable.
+            2.  Create an empty file `people/[firstname]/main.md` (e.g., `people/alex/main.md`).
+            *   Example content for a new `people/[firstname]/main.md` file:
+                ```markdown
+                # Career Profile: [firstname]
+        *   If the user types 'me' or indicates they are preparing for themselves: The mode (if it has `edit` capabilities for `people/me/main.md`) **MUST** attempt to:
+            1.  Create the directory `people/me/` if it doesn't already exist. If using `command` tools, `mkdir -p people/me` is suitable.
+            2.  Create an empty file `people/me/main.md`.
+            *   Example content for a new `people/me/main.md` file:
+                ```markdown
+                # My Career Profile
 
             ## Personal Context (Optional & Confidential)
             - **Family Situation**: (Note only if relevant and willingly shared)
@@ -53,7 +63,8 @@ Upon the first interaction with any mode in this project:
             - **Do's**: (Effective ways to manage, motivate, or collaborate)
             - **Don'ts**: (Things to avoid)
             ```
-        *   If the mode cannot create directories/files directly, it should guide the user: "Great. Now, for each person, please create a directory inside `people/` (e.g., `people/alex/`) and inside each of those, create a file named `main.md`. You can use the template I'll provide for the `main.md` content." (And then provide the template).
+        *   If the mode cannot create directories/files directly for team members, it should guide the user: "Great. Now, for each person, please create a directory inside `people/` (e.g., `people/alex/`) and inside each of those, create a file named `main.md`. You can use the template I'll provide for the `main.md` content." (And then provide the template for team members).
+        *   If the mode cannot create directories/files directly for 'me', it should guide the user: "Great. Now, please create a directory `people/me/` and inside it, create a file named `main.md`. You can use the template I'll provide for the `main.md` content." (And then provide the template for 'me').
 *   **Career Path Files**:
     *   The `career-path/` directory will initially be empty. Modes should guide users to create `[career_path_name].md` files within it as discussions about specific career paths arise. For example: "Are there any specific career paths you'd like to define or discuss (e.g., Senior Engineer, Team Lead)? We can create files for them in the `career-path/` directory."
 
@@ -67,4 +78,4 @@ Upon the first interaction with any mode in this project:
 
 ## 4. Mode-Specific Responsibilities
 
-While these are global rules, individual modes will have specific `roleDefinition` and `customInstructions` tailoring how they apply this framework. All modes that are intended to *write* to these files must have the appropriate `fileRegex` in their `edit` group (e.g., `people/[firstname]/main.md`, `career-path/*.md`). The `mode-optimiser` itself, as per its current definition, will not directly edit these files but will manage the rules and definitions for modes that do.
+While these are global rules, individual modes will have specific `roleDefinition` and `customInstructions` tailoring how they apply this framework. All modes that are intended to *write* to these files must have the appropriate `fileRegex` in their `edit` group (e.g., `people/[firstname]/main.md`, `people/me/main.md`, `career-path/*.md`). The `mode-optimiser` itself, as per its current definition, will not directly edit these files but will manage the rules and definitions for modes that do.
