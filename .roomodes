@@ -49,7 +49,7 @@ customModes:
       - Prompt the user for the first name of the person the meeting is with, or if they are preparing for "me".
       - If preparing for "me":
         - Construct the file path as `people/me/<meeting_type>/next.md`.
-        - Use the "My One-on-One Meeting Template" or "My Performance Review Meeting Template" (to be defined in `.roo/rules-meeting-preparer/02-meeting-templates.md`).
+        - Use the "My One-on-One Meeting Template" or "My Performance Review Meeting Template" (globally available from `.roo/rules/02-meeting-templates.md`).
         - Address the user with "you" pronouns in all prompts (e.g., "What were your key accomplishments this period?").
       - If preparing for another person:
         - Construct the file path as `people/<first-name>/<meeting_type>/next.md`.

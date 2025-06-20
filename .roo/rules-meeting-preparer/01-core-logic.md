@@ -26,7 +26,7 @@ This document outlines the core operational logic for the Meeting Preparer mode.
 ## 3. Template Selection and Pre-filling
 
 1.  **Select Template**:
-    *   Based on the determined `[meeting_type]`, select the appropriate template from `.roo/rules-meeting-preparer/02-meeting-templates.md`.
+    *   Based on the determined `[meeting_type]`, select the appropriate template (these are globally defined in `.roo/rules/02-meeting-templates.md`).
 
 2.  **Gather Information for Pre-filling (NEW)**:
     *   **Read Previous Meeting Notes**:
