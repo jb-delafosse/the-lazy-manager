@@ -6,10 +6,13 @@ This project utilizes Roo Code, an AI assistant, to streamline and enhance note-
 
 The system relies on a defined directory structure within the project:
 
-*   `people/`: Contains subdirectories for each team member (e.g., `people/alex/`).
-    *   `[firstname]/main.md`: A central profile for each person, detailing goals, context, and management style.
-    *   `[firstname]/one-on-one/`: Stores notes for one-on-one meetings.
-    *   `[firstname]/performance-review/`: Stores notes for performance reviews.
+*   `people/`: Contains subdirectories for each team member (e.g., `people/alex/`) and a dedicated `me/` directory for the user's own notes.
+    *   `[firstname]/main.md`: A central profile for each team member, detailing goals, context, and management style.
+    *   `[firstname]/one-on-one/`: Stores notes for one-on-one meetings with team members.
+    *   `[firstname]/performance-review/`: Stores notes for performance reviews for team members.
+    *   `me/main.md`: A central profile for the user, similar to team member profiles.
+    *   `me/one-on-one/`: Stores notes for the user's own one-on-one meetings (e.g., with their manager).
+    *   `me/performance-review/`: Stores notes for the user's own performance reviews.
 *   `career-path/`: Contains Markdown files defining different career trajectories (e.g., `software-engineer.md`).
 
 ## Custom Roo Modes
@@ -26,16 +29,16 @@ This project employs specialized Roo modes to manage different aspects of the no
 ### 2. 🤝 Meeting Preparer (`meeting-preparer`)
 
 *   **Purpose:** Facilitates the preparation of structured notes for one-on-one meetings and performance reviews.
-*   **Role:** Helps determine the meeting type, identifies the team member, and creates/updates a meeting preparation document (e.g., `people/john/performance-review/next.md`). It uses predefined templates and attempts to pre-fill information from previous meetings and career path documents.
-*   **When to Use:** Use this mode before a one-on-one or performance review to structure your thoughts and ensure all key discussion points are covered.
-*   **Key Capabilities:** Can read relevant files and edit meeting preparation files (`people/[firstname]/[meeting_type]/next.md`). It can also execute commands, for example, to create necessary directories.
+*   **Role:** Helps determine the meeting type, identifies the team member (or "me" for the user), and creates/updates a meeting preparation document (e.g., `people/john/performance-review/next.md` or `people/me/one-on-one/next.md`). It uses predefined templates and attempts to pre-fill information from `main.md` files, previous meetings, and career path documents, minimizing repetitive questions.
+*   **When to Use:** Use this mode before a one-on-one or performance review (for a team member or yourself) to structure your thoughts and ensure all key discussion points are covered.
+*   **Key Capabilities:** Can read relevant files and edit meeting preparation files (`people/[firstname_or_me]/[meeting_type]/next.md`). It can also execute commands, for example, to create necessary directories.
 
 ### 3. 🗓️ Meeting Archiver (`meeting-archiver`)
 
 *   **Purpose:** Finalizes and archives meeting notes after a meeting has concluded.
-*   **Role:** Takes a preparatory note (typically `next.md`), reformats it for conciseness while maintaining its structure, and saves it as a dated archive (e.g., `people/john/one-on-one/2025-06-16.md`). It also manages the original `next.md` file post-archival.
-*   **When to Use:** After a meeting prepared with the "Meeting Preparer" (or similar) to create a clean, dated record.
-*   **Key Capabilities:** Can read career profiles and meeting notes, and edit/create dated meeting archives and the `next.md` files. It can also execute commands for file management.
+*   **Role:** Takes a preparatory note (typically `next.md` for a team member or for "me"), reformats it for conciseness while maintaining its structure, and saves it as a dated archive (e.g., `people/john/one-on-one/2025-06-16.md` or `people/me/performance-review/2025-07-01.md`). It also manages the original `next.md` file post-archival.
+*   **When to Use:** After a meeting (with a team member or your own) prepared with the "Meeting Preparer" (or similar) to create a clean, dated record.
+*   **Key Capabilities:** Can read career profiles and meeting notes, and edit/create dated meeting archives and the `next.md` files for both team members and "me". It can also execute commands for file management.
 
 ## General Workflow for AI-Assisted Note Taking
 
@@ -43,14 +46,14 @@ The typical workflow for using Roo in this project, especially for meeting manag
 
 1.  **Initial Setup (if not already done):**
     *   Roo, guided by global rules (like those in `01-career-discussion-framework.md`), will ensure the base directories (`people/`, `career-path/`) exist.
-    *   It will prompt for team member names to create individual directories and `main.md` profile files within `people/`.
+    *   It will prompt for team member names to create individual directories and `main.md` profile files within `people/`, and will also set up `people/me/main.md` for the user.
 
 2.  **Meeting Preparation:**
     *   Engage the **`Meeting Preparer`** mode.
-    *   Specify the person and type of meeting (one-on-one or performance review).
-    *   Roo will create a `next.md` file in the appropriate directory (e.g., `people/john/performance-review/next.md`).
-    *   It will read existing information from the person's `main.md`, past archived meetings, and relevant `career-path/*.md` files to pre-fill the `next.md` template.
-    *   Roo will then ask a series of guided questions to help you complete the preparation notes in `next.md`.
+    *   Specify the person (team member or "me") and type of meeting (one-on-one or performance review).
+    *   Roo will create a `next.md` file in the appropriate directory (e.g., `people/john/performance-review/next.md` or `people/me/one-on-one/next.md`).
+    *   It will read existing information from the relevant `main.md`, past archived meetings, and `career-path/*.md` files to pre-fill the `next.md` template.
+    *   Roo will then ask guided questions only for information not already found, to help you complete the preparation notes in `next.md`.
 
 3.  **Conducting the Meeting:**
     *   Use the notes in `next.md` as a guide for your discussion.
